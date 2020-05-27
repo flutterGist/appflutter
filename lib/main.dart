@@ -143,6 +143,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: TextField(
           textAlign: TextAlign.center,
           onChanged: (value) {},
+          onSubmitted: (value) {
+            if (editingController.text != null &&
+                editingController.text != "") {
+              handleQuery(editingController.text);
+            }
+          },
           controller: editingController,
           decoration: InputDecoration(
               labelText: "Search",
@@ -315,11 +321,11 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       BlocProvider.of<UsersBloc>(context).add(DeleteUsers(user: user));
       _controllersName.removeAt(index);
-        _controllersEmail.removeAt(index);
-        _controllersPhone.removeAt(index);
-        _isEnabledName.removeAt(index);
-        _isEnabledEmail.removeAt(index);
-        _isEnabledPhone.removeAt(index);
+      _controllersEmail.removeAt(index);
+      _controllersPhone.removeAt(index);
+      _isEnabledName.removeAt(index);
+      _isEnabledEmail.removeAt(index);
+      _isEnabledPhone.removeAt(index);
       users.removeAt(index);
     });
   }
@@ -353,7 +359,7 @@ class _MyHomePageState extends State<MyHomePage> {
         }
 
         if (state is UsersSearch) {
-           _scrollController.animateTo(
+          _scrollController.animateTo(
             0.0,
             curve: Curves.easeOut,
             duration: const Duration(milliseconds: 300),
@@ -387,8 +393,7 @@ class _MyHomePageState extends State<MyHomePage> {
           setLoading(false);
         }
 
-        if(state is UserUpdated)
-        {
+        if (state is UserUpdated) {
           Toast.show("User Updated", context,
               duration: 3, gravity: Toast.CENTER);
           setLoading(false);
